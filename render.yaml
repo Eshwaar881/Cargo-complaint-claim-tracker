@@ -31,7 +31,4 @@ services:
     staticPublishPath: dist
     envVars:
       - key: VITE_API_URL
-        fromService:
-          name: cargo-ops-backend
-          type: web
-          property: url
+        sync: false  # Set this to your backend Render URL after it deploys, e.g. https://cargo-ops-backend.onrender.com
