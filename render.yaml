@@ -22,13 +22,13 @@ services:
         value: "*" # Allow CORS from frontend
 
   # Frontend static web app
-  - type: static
+  - type: web
     name: cargo-ops-frontend
     env: static
     plan: free
     rootDir: frontend
     buildCommand: npm install && npm run build
-    publishDir: dist
+    staticPublishPath: dist
     envVars:
       - key: VITE_API_URL
         fromService:
