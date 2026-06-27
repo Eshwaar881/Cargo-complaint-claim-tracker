@@ -1,0 +1,29 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Environment
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Build
+dist/
+build/
+.next/
+out/
+
+# SQLite Database
+backend/src/db/*.db
+backend/src/db/*.db-journal
+backend/src/db/*.db-wal
+backend/src/db/*.db-shm
+
+# OS files
+.DS_Store
+Thumbs.db
