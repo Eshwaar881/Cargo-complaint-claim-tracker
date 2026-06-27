@@ -1,0 +1,37 @@
+services:
+  # Backend API web service
+  - type: web
+    name: cargo-ops-backend
+    env: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node src/server.js
+    envVars:
+      - key: PORT
+        value: 4000
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        value: postgresql://neondb_owner:npg_xkDAPn52UlFm@ep-orange-hall-aiz6ubur.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require
+      - key: GEMINI_API_KEY
+        value: AQ.Ab8RN6IXxFfb5LC3aNpKmQDfulKXDbooZVLs7SzR5pD9whFq4w
+      - key: GEMINI_MODEL
+        value: gemini-2.5-flash
+      - key: CORS_ORIGIN
+        value: "*" # Allow CORS from frontend
+
+  # Frontend static web app
+  - type: static
+    name: cargo-ops-frontend
+    env: static
+    plan: free
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    publishDir: dist
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          name: cargo-ops-backend
+          type: web
+          property: url
