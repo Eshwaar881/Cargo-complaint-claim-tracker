@@ -81,9 +81,11 @@ export default function App() {
   const fetchStats = () => {
     if (!user) return;
     api.getStats().then((s) => {
-      const open      = s.byStatus?.find((x) => x.status === 'OPEN')?.count || 0;
-      const escalated = s.byStatus?.find((x) => x.status === 'ESCALATED')?.count || 0;
-      setOpenCount(open + escalated);
+      const activeStatuses = ['OPEN', 'ACKNOWLEDGED', 'INVESTIGATING', 'PENDING_CUSTOMER', 'ESCALATED'];
+      const activeCount = s.byStatus
+        ?.filter(x => activeStatuses.includes(x.status))
+        .reduce((sum, x) => sum + Number(x.count), 0) || 0;
+      setOpenCount(activeCount);
     }).catch(() => {});
   };
 
