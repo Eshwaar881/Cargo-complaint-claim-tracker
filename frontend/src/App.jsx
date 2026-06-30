@@ -78,13 +78,19 @@ export default function App() {
     setView(v);
   };
 
-  useEffect(() => {
+  const fetchStats = () => {
     if (!user) return;
     api.getStats().then((s) => {
       const open      = s.byStatus?.find((x) => x.status === 'OPEN')?.count || 0;
       const escalated = s.byStatus?.find((x) => x.status === 'ESCALATED')?.count || 0;
       setOpenCount(open + escalated);
     }).catch(() => {});
+  };
+
+  useEffect(() => {
+    fetchStats();
+    window.addEventListener('refresh-stats', fetchStats);
+    return () => window.removeEventListener('refresh-stats', fetchStats);
   }, [view, user]);
 
   // ── Loading splash ────────────────────────────────────────────────────────

@@ -28,13 +28,13 @@ export const api = {
   },
   getStats:       ()             => request('/complaints/stats'),
   getComplaint:   (id)           => request(`/complaints/${id}`),
-  createComplaint:(payload)      => request('/complaints', { method: 'POST', body: JSON.stringify(payload) }),
+  createComplaint:(payload)      => request('/complaints', { method: 'POST', body: JSON.stringify(payload) }).then(r => { window.dispatchEvent(new Event('refresh-stats')); return r; }),
   updateStatus:   (id, status, actorName) =>
-    request(`/complaints/${id}/status`, { method: 'PATCH', body: JSON.stringify({ status, actorName }) }),
+    request(`/complaints/${id}/status`, { method: 'PATCH', body: JSON.stringify({ status, actorName }) }).then(r => { window.dispatchEvent(new Event('refresh-stats')); return r; }),
   assignOwner:    (id, ownerName, actorName) =>
-    request(`/complaints/${id}/assign`, { method: 'PATCH', body: JSON.stringify({ ownerName, actorName }) }),
+    request(`/complaints/${id}/assign`, { method: 'PATCH', body: JSON.stringify({ ownerName, actorName }) }).then(r => { window.dispatchEvent(new Event('refresh-stats')); return r; }),
   updatePriority: (id, priority, actorName) =>
-    request(`/complaints/${id}/priority`, { method: 'PATCH', body: JSON.stringify({ priority, actorName }) }),
+    request(`/complaints/${id}/priority`, { method: 'PATCH', body: JSON.stringify({ priority, actorName }) }).then(r => { window.dispatchEvent(new Event('refresh-stats')); return r; }),
   addNote:        (id, note, actorName) =>
     request(`/complaints/${id}/notes`, { method: 'POST', body: JSON.stringify({ note, actorName }) }),
   sendReminder:   (id, actorName) =>
